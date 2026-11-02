@@ -9,3 +9,11 @@
 
 /** Whether the AI Assistant is offered at all — header button and chat panel. */
 export const AI_CHAT_ENABLED = import.meta.env.VITE_AI_CHAT_ENABLED !== 'false'
+
+/**
+ * Whether password accounts exist: the email/password form, "Create an account",
+ * "Forgot your password?" and their routes. An SSO-only deployment builds with
+ * VITE_LOCAL_AUTH_ENABLED=false (the API serves 404 for those endpoints too).
+ */
+export const LOCAL_AUTH_ENABLED =
+  import.meta.env.VITE_LOCAL_AUTH_ENABLED !== 'false'
