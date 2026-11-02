@@ -1,4 +1,5 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, redirect } from '@tanstack/react-router'
+import { LOCAL_AUTH_ENABLED } from '@/lib/feature-flags'
 import { useMutation } from '@tanstack/react-query'
 import { z } from 'zod'
 import { CheckCircle2, LoaderCircle, Mail, XCircle } from 'lucide-react'
@@ -13,6 +14,10 @@ const verifyEmailSearchSchema = z.object({
 })
 
 export const Route = createFileRoute('/_user/verify-email')({
+  // Password accounts are off in an SSO-only deployment.
+  beforeLoad: () => {
+    if (!LOCAL_AUTH_ENABLED) throw redirect({ to: '/login' })
+  },
   component: RouteComponent,
   validateSearch: verifyEmailSearchSchema,
 })
